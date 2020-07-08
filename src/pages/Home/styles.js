@@ -65,8 +65,21 @@ export const PlayerWrapper = styled.div`
   background: ${darken(0.1, '#312e38')};
 
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    button {
+      background: transparent;
+      border: 0;
+      padding: 10px;
+    }
+  }
 `;
 
 export const TextInfo = styled.p`

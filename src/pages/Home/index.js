@@ -1,5 +1,10 @@
-import React from 'react';
-import { MdPlayArrow, MdStop } from 'react-icons/md';
+import React, { useCallback } from 'react';
+import {
+  MdPlayArrow,
+  MdPauseCircleOutline,
+  MdReplay10,
+  MdForward10,
+} from 'react-icons/md';
 import { format } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 
@@ -27,7 +32,7 @@ function Home() {
     });
   }, []);
 
-  const handleTimeUpdate = React.useCallback(() => {
+  const handleTimeUpdate = useCallback(() => {
     const audioPlayer = audioElementRef.current;
     const date = new Date();
     date.setMinutes(0);
@@ -38,6 +43,7 @@ function Home() {
         locale: ptBR,
       }),
     );
+    date.setMinutes(0);
     date.setSeconds(0);
     date.setSeconds(Math.floor(audioPlayer.duration));
 
@@ -46,6 +52,7 @@ function Home() {
         locale: ptBR,
       }),
     );
+    console.log(audioPlayer.currentTime, audioPlayer.duration);
   }, []);
 
   React.useEffect(() => {
@@ -64,14 +71,38 @@ function Home() {
     }
   }, [isPlaying, track]);
 
-  const handleToogleTrack = React.useCallback((trc) => {
+  const handleToogleTrack = useCallback((trc) => {
     setIsPlaying((prevState) => !prevState);
     setTrack((prevState) => (prevState ? null : trc));
   }, []);
 
-  const handleOnEnded = React.useCallback(() => {
+  const handleOnEnded = useCallback(() => {
     setIsPlaying(false);
     setTrack(null);
+  }, []);
+
+  const incrementTenSecs = useCallback(() => {
+    const audioPlayer = audioElementRef.current;
+
+    if (audioPlayer.currentTime + 10 >= audioPlayer.duration) {
+      return null;
+    }
+
+    audioPlayer.currentTime += 10;
+
+    return true;
+  }, []);
+
+  const decrementTenSecs = useCallback(() => {
+    const audioPlayer = audioElementRef.current;
+
+    if (audioPlayer.currentTime - 10 <= 0) {
+      return null;
+    }
+
+    audioPlayer.currentTime -= 10;
+
+    return true;
   }, []);
 
   return (
@@ -83,7 +114,7 @@ function Home() {
             <li key={trc._id}>
               {track && track._id === trc._id ? (
                 <button type="button" onClick={() => handleToogleTrack(trc)}>
-                  <MdStop size={30} color="#fff" />
+                  <MdPauseCircleOutline size={30} color="#fff" />
                 </button>
               ) : (
                 <button type="button" onClick={() => handleToogleTrack(trc)}>
@@ -109,9 +140,17 @@ function Home() {
             onEnded={handleOnEnded}
             src={`http://localhost:3333/stream/${track._id}`}
           />
-          <span>
-            {trackTime} / {trackTotalTime}
-          </span>
+          <div>
+            <button type="button" onClick={decrementTenSecs}>
+              <MdReplay10 size={48} color="#fff" />
+            </button>
+            <span>
+              {trackTime} / {trackTotalTime}
+            </span>
+            <button type="button" onClick={incrementTenSecs}>
+              <MdForward10 size={48} color="#fff" />
+            </button>
+          </div>
         </PlayerWrapper>
       )}
     </Container>
