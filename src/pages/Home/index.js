@@ -137,7 +137,9 @@ function Home() {
             autoPlay
             onTimeUpdate={handleTimeUpdate}
             onEnded={handleOnEnded}
-            src={`http://localhost:3333/stream/${track._id}`}
+            src={`${
+              process.env.REACT_APP_API_URL || 'http://localhost:3333'
+            }/stream/${track._id}`}
           />
           <div>
             <button type="button" onClick={decrementTenSecs}>
