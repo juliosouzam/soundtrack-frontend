@@ -5,7 +5,7 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  const token = JSON.parse(localStorage.getItem('@soundtrack/token'));
+  const token = JSON.parse(localStorage.getItem('@soundtrack/token') || '{}');
   if (token) {
     return {
       ...config,
