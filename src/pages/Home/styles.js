@@ -9,6 +9,8 @@ export const Content = styled.div`
   width: 100%;
   max-width: 1120px;
   margin: 0 auto;
+
+  display: flex;
 `;
 
 export const Title = styled.h1``;
@@ -65,4 +67,9 @@ export const PlayerWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+export const TextInfo = styled.p`
+  font-size: 24px;
+  margin: 50px auto 0;
 `;

@@ -5,7 +5,13 @@ import ptBR from 'date-fns/locale/pt-BR';
 
 import api from '../../services/api';
 
-import { Container, Content, TrackList, PlayerWrapper } from './styles';
+import {
+  Container,
+  Content,
+  TrackList,
+  PlayerWrapper,
+  TextInfo,
+} from './styles';
 
 function Home() {
   const audioElementRef = React.useRef(null);
@@ -71,6 +77,7 @@ function Home() {
   return (
     <Container>
       <Content>
+        {tracks.length <= 0 && <TextInfo>Nenhum registro encontrado</TextInfo>}
         <TrackList>
           {tracks.map((trc) => (
             <li key={trc._id}>
