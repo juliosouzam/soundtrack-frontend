@@ -43,15 +43,13 @@ function Dashboard() {
             });
           },
         })
-        .then((response) => {
-          uploadedFile(uploadedFile.id, {
+        .then(() => {
+          uploadedFile(file.id, {
             uploaded: true,
-            id: response.data._id,
-            url: response.data.url,
           });
         })
         .catch(() => {
-          uploadedFile(uploadedFile.id, {
+          uploadedFile(file.id, {
             error: true,
           });
         });
@@ -121,14 +119,16 @@ function Dashboard() {
               </FileInfo>
 
               <div>
-                <CircularProgressbar
-                  styles={{
-                    root: { width: 24 },
-                    path: { stroke: '#7159c1' },
-                  }}
-                  strokeWidth={10}
-                  value={file.progress}
-                />
+                {!file.uploaded && (
+                  <CircularProgressbar
+                    styles={{
+                      root: { width: 24 },
+                      path: { stroke: '#7159c1' },
+                    }}
+                    strokeWidth={10}
+                    value={file.progress}
+                  />
+                )}
 
                 {file.uploaded && <MdCheckCircle size={24} color="#78e5d5" />}
                 {file.error && <MdError size={24} color="#e57878" />}
