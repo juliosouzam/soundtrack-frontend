@@ -9,10 +9,9 @@ export default function RouteWrapper({
   ...rest
 }) {
   const signed = !!localStorage.getItem('@soundtrack/token');
-
   useEffect(() => {
     api.get('/status').catch(() => {
-      localStorage.setItem('@soundtrack/token', null);
+      localStorage.setItem('@soundtrack/token', '');
       return <Redirect to="/" />;
     });
   }, []);

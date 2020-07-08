@@ -52,7 +52,6 @@ function Home() {
         locale: ptBR,
       }),
     );
-    console.log(audioPlayer.currentTime, audioPlayer.duration);
   }, []);
 
   React.useEffect(() => {
