@@ -119,7 +119,7 @@ function Dashboard() {
               </FileInfo>
 
               <div>
-                {!file.uploaded && (
+                {!file.uploaded && !file.error && (
                   <CircularProgressbar
                     styles={{
                       root: { width: 24 },
