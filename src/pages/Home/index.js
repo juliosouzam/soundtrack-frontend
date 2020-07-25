@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import {
   MdPlayArrow,
   MdPauseCircleOutline,
@@ -19,7 +19,7 @@ import {
 } from './styles';
 
 function Home() {
-  const audioElementRef = React.useRef(null);
+  const audioElementRef = useRef(null);
   const [tracks, setTracks] = React.useState([]);
   const [trackTime, setTrackTime] = React.useState('');
   const [trackTotalTime, setTrackTotalTime] = React.useState('');
@@ -108,6 +108,7 @@ function Home() {
     <Container>
       <Content>
         {tracks.length <= 0 && <TextInfo>Nenhum registro encontrado</TextInfo>}
+
         <TrackList>
           {tracks.map((trc) => (
             <li key={trc._id}>
@@ -141,6 +142,7 @@ function Home() {
               process.env.REACT_APP_API_URL || 'http://localhost:3333'
             }/stream/${track._id}`}
           />
+
           <div>
             <button type="button" onClick={decrementTenSecs}>
               <MdReplay10 size={48} color="#fff" />
